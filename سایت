@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>پیمان محمدخانی</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* فونت زیبا */
+        @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;500;700&family=El Messiri:wght@500;700&display=swap');
+
+        body {
+            font-family: 'Vazirmatn', 'El Messiri', sans-serif;
+            background: #000;
+            color: #0f0;
+            text-align: center;
+            min-height: 100vh;
+            padding: 60px 20px;
+            position: relative;
+            overflow: hidden;
+            direction: rtl;
+            transition: background 0.5s ease;
+        }
+
+        /* تم روشن */
+        body.light {
+            background: #f0f0f0;
+            color: #333;
+        }
+        body.light .btn {
+            background: #f0f0f0;
+            border: 1px solid #ddd;
+            color: #333;
+        }
+        body.light h1, body.light h2 {
+            color: #2c3e50 !important;
+        }
+
+        /* بارش کد سبز */
+        .code-rain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -2;
+            opacity: 0.2;
+        }
+        .column {
+            position: absolute;
+            font-family: monospace;
+            font-size: 14px;
+            color: #0f0;
+            text-shadow: 0 0 5px #0f0;
+            white-space: nowrap;
+            animation: drop linear infinite;
+        }
+        @keyframes drop {
+            0% { transform: translateY(-100vh); }
+            100% { transform: translateY(100vh); }
+        }
+
+        /* نگین طلایی */
+        .gold-drops {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        .drop {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #ffd700;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #ffd700;
+            opacity: 0.8;
+            animation: fall linear infinite;
+        }
+        @keyframes fall {
+            0% { transform: translateY(-10vh); opacity: 0; }
+            100% { transform: translateY(100vh); opacity: 0; }
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            z-index: 2;
+            position: relative;
+        }
+
+        .avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 4px solid #ffd700;
+            object-fit: cover;
+            margin: 0 auto 25px;
+            display: block;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
+            outline: 2px solid #ffeb3b;
+            outline-offset: 6px;
+        }
+
+        h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            color: #fff;
+            text-shadow: 0 0 10px #ffd700, 0 0 20px #ffa000;
+            font-weight: bold;
+            font-family: 'El Messiri', sans-serif;
+            letter-spacing: -1px;
+        }
+
+        h2 {
+            color: #03dac6;
+            font-size: 1.3em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+
+        .links {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            margin: 20px 0;
+        }
+
+        .btn {
+            padding: 16px 25px;
+            margin: 0 auto;
+            width: 90%;
+            max-width: 350px;
+            background: rgba(255, 215, 0, 0.2);
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 12px;
+            border: 1px solid #ffd700;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+            font-size: 1.1em;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: rgba(255, 215, 0, 0.4);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.5);
+        }
+
+        .theme-toggle {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            padding: 12px 20px;
+            background: rgba(255, 215, 0, 0.3);
+            color: white;
+            border: 1px solid #ffd700;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+            z-index: 100;
+        }
+
+        .music-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            padding: 12px 20px;
+            background: rgba(0, 255, 0, 0.3);
+            color: white;
+            border: 1px solid #0f0;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0, 255, 0, 0.3);
+            z-index: 100;
+        }
+
+        footer {
+            margin-top: 40px;
+            font-size: 14px;
+            color: rgba(255, 215, 0, 0.6);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- بارش کد -->
+    <div class="code-rain" id="codeRain"></div>
+
+    <!-- نگین طلایی -->
+    <div class="gold-drops" id="goldDrops"></div>
+
+    <!-- موزیک پس‌زمینه -->
+    <audio id="bgMusic" loop>
+        <source src="https://cdn.pixabay.com/audio/2021/12/20/audio_8a1f9eb424.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- صدای کلیک -->
+    <audio id="clickSound">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-arcade-game-jump-coin-216.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="container">
+        <img src="https://raw.githubusercontent.com/peymantak706-hash/piman.github.io/main/piman.jpg" alt="پیمان محمدخانی" class="avatar">
+
+        <h1>پیمان محمدخانی</h1>
+        <h2>توسعه‌دهنده وب | دیجیتال نوین</h2>
+
+        <div class="links">
+            <a href="https://instagram.com/peyman._.neon" target="_blank" class="btn">Instagram: @peyman._.neon</a>
+            <a href="mailto:peymantak706@gmail.com" class="btn">ایمیل من</a>
+            <a href="tel:09107519637" class="btn">تماس تلفنی</a>
+            <a href="https://wa.me/989107519637" target="_blank" class="btn">پیام در واتساپ</a>
+        </div>
+    </div>
+
+    <button class="theme-toggle" onclick="toggleTheme()">تغییر تم</button>
+    <button class="music-toggle" onclick="toggleMusic()">موزیک: روشن</button>
+
+    <footer>&copy; 2025 پیمان محمدخانی — دنیای نئون و کدنویسی</footer>
+
+    <script>
+        // بارش کد
+        const codeRain = document.getElementById('codeRain');
+        for (let i = 0; i < 40; i++) {
+            const col = document.createElement('div');
+            col.className = 'column';
+            col.style.left = (i * 2.5) + '%';
+            col.style.animationDuration = Math.random() * 30 + 20 + 's';
+            col.innerText = generateRandomCode();
+            codeRain.appendChild(col);
+        }
+        function generateRandomCode() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789{}[]()=+-_<>?/';
+            return Array(50).fill().map(() => chars[Math.floor(Math.random() * chars.length)]).join('');
+        }
+
+        // نگین طلایی
+        const goldDrops = document.getElementById('goldDrops');
+        setInterval(() => {
+            const drop = document.createElement('div');
+            drop.className = 'drop';
+            drop.style.left = Math.random() * 100 + '%';
+            drop.style.animationDuration = Math.random() * 5 + 3 + 's';
+            goldDrops.appendChild(drop);
+            setTimeout(() => drop.remove(), 5000);
+        }, 700);
+
+        // صداها
+        const bgMusic = document.getElementById('bgMusic');
+        const clickSound = document.getElementById('clickSound');
+        let musicPlaying = false;
+
+        // پخش موزیک بعد از اولین کلیک
+        document.body.addEventListener('click', () => {
+            if (!musicPlaying) {
+                bgMusic.play().catch(e => console.log("موزیک نمی‌تواند پخش شود."));
+                musicPlaying = true;
+            }
+        }, { once: true });
+
+        // صدای کلیک
+        document.querySelectorAll('.btn, .theme-toggle, .music-toggle').forEach(btn => {
+            btn.addEventListener('click', () => {
+                clickSound.currentTime = 0;
+                clickSound.play().catch(() => {});
+            });
+        });
+
+        // تغییر تم
+        function toggleTheme() {
+            document.body.classList.toggle('light');
+        }
+
+        // تغییر موزیک
+        function toggleMusic() {
+            if (bgMusic.paused) {
+                bgMusic.play();
+                document.querySelector('.music-toggle').innerText = 'موزیک: خاموش';
+            } else {
+                bgMusic.pause();
+                document.querySelector('.music-toggle').innerText = 'موزیک: روشن';
+            }
+        }
+    </script>
+</body>
+</html>
